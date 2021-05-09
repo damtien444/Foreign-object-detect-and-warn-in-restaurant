@@ -87,6 +87,9 @@ if __name__ == '__main__':
 
             # TODO: Viết hàm gửi cảnh báo
 
+
+            # TODO: Kích hoạt hàm ghi video chuẩn bị video để gửi đi
+
             # TODO: Kích hoạt mô hình nhận diện'
 
             last = time.time()

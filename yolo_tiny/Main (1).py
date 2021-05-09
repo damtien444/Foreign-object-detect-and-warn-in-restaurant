@@ -2,31 +2,30 @@ import cv2
 import argparse
 import numpy as np
 import matplotlib.pyplot as plt
+import imutils
 import time
 from multiprocessing import Process
 # Cai dat tham so doc weight, config va class name
-from yolo_tiny.firebase import Firebase
-
+from Yolov3_tiny.firebase import Firebase
+from Yolov3_tiny.Speak import play
 ap = argparse.ArgumentParser()
-ap.add_argument('-c', '--config', default='yolo_tiny/path/yolov3.cfg',
+ap.add_argument('-c', '--config', default='path/yolov3.cfg',
                 help='path to yolo config file')
-ap.add_argument('-w', '--weights', default='yolo_tiny/path/yolov3.weights',
+ap.add_argument('-w', '--weights', default='path/yolov3.weights',
                 help='path to yolo pre-trained weights')
-ap.add_argument('-cl', '--classes', default='yolo_tiny/path/coco.names',
+ap.add_argument('-cl', '--classes', default='path/coco.names',
                 help='path to text file containing class names')
 args = ap.parse_args()
 print(args)
-
 
 def plot_image(image):
     image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
     plt.imshow(image)
     plt.show()
 
-
 def get_path_image(image):
-    filename = '/image/ras.png'
-    image = cv2.resize(image, (128, 128))
+    filename = '../image/ras.png'
+    image = cv2.resize(image, (128,128))
     cv2.imwrite(filename, image)
 
 
@@ -36,7 +35,6 @@ def get_output_layers(net):
     output_layers = [layer_names[i[0] - 1] for i in net.getUnconnectedOutLayers()]
     return output_layers
 
-
 # Ham ve cac hinh chu nhat va ten class
 def draw_prediction(img, class_id, x, y, x_plus_w, y_plus_h):
     label = str(classes[class_id])
@@ -44,10 +42,10 @@ def draw_prediction(img, class_id, x, y, x_plus_w, y_plus_h):
     cv2.rectangle(img, (x, y), (x_plus_w, y_plus_h), color, 2)
     cv2.putText(img, label, (x - 10, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
 
-
 # Doc tu webcam
 # cap  = VideoStream(src='http://192.168.1.4:8080/video').start()
 # cap  = VideoStream(src='video/video8.mp4').start()
+
 
 
 # Doc ten cac class
@@ -64,7 +62,6 @@ out_video = cv2.VideoWriter('./video/ras.avi', fourcc, 5, (720, 480))
 
 frames_video = []
 
-
 def run_v2():
     cap = cv2.VideoCapture(0)
     while True:
@@ -75,15 +72,12 @@ def run_v2():
     cap.release()
     cv2.destroyAllWindows()
 
-
 def savevideo(out_video, frames_video):
     for f in frames_video:
         out_video.write(f)
     out_video.release()
     data = Firebase()
-    data.push_data()
-    print("Sent successfully")
-
+    data.getdata()
 
 def run():
     isSave = False
@@ -95,7 +89,7 @@ def run():
     start = time.time()
 
     startsave = time.time()
-    while (cap.isOpened()):
+    while(cap.isOpened()):
         ret, frame = cap.read()
         # Resize va dua khung hinh vao mang predict
         frame = cv2.resize(frame, (720, 480))
@@ -128,7 +122,6 @@ def run():
                     confidences.append(float(confidence))
                     boxes.append([x, y, w, h])
         indices = cv2.dnn.NMSBoxes(boxes, confidences, obj_threshold, nms_threshold)
-
         # Ve cac khung chu nhat quanh doi tuong
         for i in indices:
             i = i[0]
@@ -140,17 +133,18 @@ def run():
             draw_prediction(frame, class_ids[i], round(x), round(y), round(x + w), round(y + h))
             print([round(x), round(y), round(x + w), round(y + h)])
             if classes[class_ids[i]] in Foreign_obj:
-                if count == 0:
+                if count==0:
                     startsave = time.time()
                     isSave = True
                     # get_path_image(frame)
                     count = 1
 
+
         frames_video.append(frame)
-        if time.time() - start > 10 and isSave == False:
+        if (time.time() - start > 10 and isSave==False):
             frames_video.pop(0)
         else:
-            if time.time() - startsave > 10:
+            if(time.time()-startsave > 10):
                 print(1)
                 for f in frames_video:
                     out_video.write(f)
@@ -166,7 +160,6 @@ def run():
     out_video.release()
     cap.release()
     cv2.destroyAllWindows()
-
 
 def ObjectDetect(frame, count):
     dic_object = {}
@@ -209,24 +202,22 @@ def ObjectDetect(frame, count):
         w = box[2]
         h = box[3]
         print([round(x), round(y), round(x + w), round(y + h)])
-        # plt.imshow(frame[x:x + w, y:y + h:, ])
-        # plt.show()
+        plt.imshow(frame[x:x+w, y:y+h:, ])
+        plt.show()
         if classes[class_ids[i]] in Foreign_obj:
             draw_prediction(frame, class_ids[i], round(x), round(y), round(x + w), round(y + h))
             dic_object[classes[class_ids[i]]] = frame[round(y):round(y + h), round(x):round(x + w)]
             if count == 0:
-                # startsave = time.time()
-                # isSave = True
-
-                # lưu ảnh lại trong local
+                startsave = time.time()
+                isSave = True
                 get_path_image(frame)
-                # count = 1
-        get_path_image(frame)
+                count = 1
     return dic_object
-# if __name__ == "__main__":
-#     p1 = Process(target=run)
-#     p1.start()
-#     p2.start()
-#     p1.join()
-#     p2.join()
-#     # run()
+if __name__ == "__main__":
+    p1 = Process(target=run)
+    p2 = Process(target=play)
+    p1.start()
+    p2.start()
+    p1.join()
+    p2.join()
+    # run()
