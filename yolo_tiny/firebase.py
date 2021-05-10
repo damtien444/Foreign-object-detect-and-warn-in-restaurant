@@ -21,7 +21,7 @@ def converter(file, output):
 
 class Firebase:
     def __init__(self):
-        converter("video/ras.avi", 'video/ras.mp4')
+        converter("./video/ras.avi", './video/ras.mp4')
         self.firebase = pyrebase.initialize_app(firebaseConfig)
         self.db = self.firebase.database()
         self.storage = self.firebase.storage()

@@ -90,7 +90,9 @@ def detect_human_leaving():
 
 def detect_object_onTable(frame):
     objects = ObjectDetect(frame, 0)
-    print(objects)
+    for key in objects:
+        print(key)
+    # print(objects)
     return objects
 
 
@@ -98,16 +100,14 @@ def saveVideoAndPush():
     cam = VideoCapture(IP_CAMERA_ADDRESS)
 
     start = time.time()
-    start_save = 0
+    start_save = time.time()
 
     fourcc = cv2.VideoWriter_fourcc(*'XVID')
-    out_video = cv2.VideoWriter('./video/ras.avi', fourcc, 5, (720, 480))
+    out_video = cv2.VideoWriter('./video/ras.avi', fourcc, 30, (640, 480))
 
     frames_video = []
     pre_state = True
     is_save = False
-
-    time.sleep(1)
 
     while True:
         frame = cam.read()
@@ -116,24 +116,27 @@ def saveVideoAndPush():
             start_save = time.time()
             is_save = True
 
-
         frames_video.append(frame)
         if time.time() - start > 5 and not is_save:
             frames_video.pop(0)
         else:
-            if time.time() - start_save > 5:
+            if time.time() - start_save > 5 and is_save:
                 print("Sending")
+                frames_video.reverse()
                 savevideo(out_video, frames_video)
                 is_save = False
+
         cv2.imshow("object detection", frame)
 
         pre_state = event.is_set()
 
 
 event = threading.Event()
+
 t1 = threading.Thread(target=detect_human_leaving)
 
 t2 = threading.Thread(target=saveVideoAndPush)
 
 t1.start()
+
 t2.start()

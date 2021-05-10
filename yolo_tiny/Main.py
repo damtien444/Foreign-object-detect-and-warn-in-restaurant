@@ -25,8 +25,8 @@ def plot_image(image):
 
 
 def get_path_image(image):
-    filename = '/image/ras.png'
-    image = cv2.resize(image, (128, 128))
+    filename = './image/ras.png'
+    image = cv2.resize(image, (432, 368))
     cv2.imwrite(filename, image)
 
 
@@ -168,9 +168,9 @@ def run():
     cv2.destroyAllWindows()
 
 
-def ObjectDetect(frame, count):
+def ObjectDetect(frame, count=0):
     dic_object = {}
-    frame = cv2.resize(frame, (720, 480))
+    frame = cv2.resize(frame, (432, 368))
     Height, Width = frame.shape[:2]
 
     scale = 0.00392
@@ -209,19 +209,14 @@ def ObjectDetect(frame, count):
         w = box[2]
         h = box[3]
         print([round(x), round(y), round(x + w), round(y + h)])
-        # plt.imshow(frame[x:x + w, y:y + h:, ])
-        # plt.show()
-        if classes[class_ids[i]] in Foreign_obj:
-            draw_prediction(frame, class_ids[i], round(x), round(y), round(x + w), round(y + h))
-            dic_object[classes[class_ids[i]]] = frame[round(y):round(y + h), round(x):round(x + w)]
+        draw_prediction(frame, class_ids[i], round(x), round(y), round(x + w), round(y + h))
+        dic_object[classes[class_ids[i]]] = frame[round(y):round(y + h), round(x):round(x + w)]
+        if classes[class_ids[i]] not in Foreign_obj:
             if count == 0:
-                # startsave = time.time()
-                # isSave = True
 
                 # lưu ảnh lại trong local
                 get_path_image(frame)
-                # count = 1
-        get_path_image(frame)
+                count = 1
     return dic_object
 # if __name__ == "__main__":
 #     p1 = Process(target=run)
