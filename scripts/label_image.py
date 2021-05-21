@@ -56,56 +56,78 @@ def load_labels(label_file):
     return label
 
 
-def classify(image_file):
-    # =============================================================================
-    #   Note : Provide your own absolute file path for the following
-    #   You can choose the retrained graph of either as v1.0 or v2.0
-    #   Both models are retrained inception models (on my procured dataset)
-    #   v1.0 was trained for 500 epocs on a preliminary dataset of poses.
-    #   v2.0 was trained for 4000 epocs on a dataset containing the previous dataset
-    #   and more.
-    # =============================================================================
-    # Change the path to your convenience
-    file_path = os.path.abspath(os.path.dirname(__file__))
-    path = os.path.join(file_path, '../models/graph/retrained/retrained_v2.0/')
-    model_file = path + 'retrained_graph.pb'
-    label_file = path + 'retrained_labels.txt'
-    input_height = 224
-    input_width = 224
-    input_mean = 128
-    input_std = 128
-    input_layer = "input"
-    output_layer = "final_result"
+class SessionRun:
+    def __init__(self):
+        file_path = os.path.abspath(os.path.dirname(__file__))
+        path = os.path.join(file_path, '../models/graph/retrained/retrained_v2.0/')
+        model_file = path + 'retrained_graph.pb'
+        self.label_file = path + 'retrained_labels.txt'
+        self.input_height = 224
+        self.input_width = 224
+        self.input_mean = 128
+        self.input_std = 128
+        input_layer = "input"
+        output_layer = "final_result"
 
-    graph = load_graph(model_file)
-    t = read_tensor_from_image_file(image_file,
-                                    input_height=input_height,
-                                    input_width=input_width,
-                                    input_mean=input_mean,
-                                    input_std=input_std)
+        self.graph = load_graph(model_file)
 
-    input_name = "import/" + input_layer
-    output_name = "import/" + output_layer
-    input_operation = graph.get_operation_by_name(input_name)
-    output_operation = graph.get_operation_by_name(output_name)
+        input_name = "import/" + input_layer
+        output_name = "import/" + output_layer
+        self.input_operation = self.graph.get_operation_by_name(input_name)
+        self.output_operation = self.graph.get_operation_by_name(output_name)
 
-    with tf.Session(graph=graph) as sess:
-        start = time.time()
-        results = sess.run(output_operation.outputs[0],
-                           {input_operation.outputs[0]: t})
-        end = time.time()
-    results = np.squeeze(results)
+        self.sess = tf.Session(graph=self.graph)
 
-    labels = load_labels(label_file)
+        self.labels = load_labels(self.label_file)
 
-    print('\nEvaluation time (1-image): {:.3f}s\n'.format(end - start))
-    template = "{} (score={:0.5f})"
-    label = ''
-    if results[0] > results[1]:
-        label = labels[0]
-        result = results[0]
-    else:
-        label = labels[1]
-        result = results[1]
+    def classify(self, image_file):
+        # =============================================================================
+        #   Note : Provide your own absolute file path for the following
+        #   You can choose the retrained graph of either as v1.0 or v2.0
+        #   Both models are retrained inception models (on my procured dataset)
+        #   v1.0 was trained for 500 epocs on a preliminary dataset of poses.
+        #   v2.0 was trained for 4000 epocs on a dataset containing the previous dataset
+        #   and more.
+        # =============================================================================
+        # Change the path to your convenience
+        # file_path = os.path.abspath(os.path.dirname(__file__))
+        # path = os.path.join(file_path, '../models/graph/retrained/retrained_v2.0/')
+        # model_file = path + 'retrained_graph.pb'
+        # label_file = path + 'retrained_labels.txt'
+        # input_height = 224
+        # input_width = 224
+        # input_mean = 128
+        # input_std = 128
+        # input_layer = "input"
+        # output_layer = "final_result"
+        #
+        # graph = load_graph(model_file)
+        t = read_tensor_from_image_file(image_file,
+                                        input_height=self.input_height,
+                                        input_width=self.input_width,
+                                        input_mean=self.input_mean,
+                                        input_std=self.input_std)
+        #
+        # input_name = "import/" + input_layer
+        # output_name = "import/" + output_layer
+        # input_operation = graph.get_operation_by_name(input_name)
+        # output_operation = graph.get_operation_by_name(output_name)
 
-    return label, result
+        # with tf.Session(graph=self.graph) as sess:
+        #     start = time.time()
+        results = self.sess.run(self.output_operation.outputs[0],
+                                {self.input_operation.outputs[0]: t})
+        #     end = time.time()
+        results = np.squeeze(results)
+
+        # print('\nEvaluation time (1-image): {:.3f}s\n'.format(end - start))
+        template = "{} (score={:0.5f})"
+        label = ''
+        if results[0] > results[1]:
+            label = self.labels[0]
+            result = results[0]
+        else:
+            label = self.labels[1]
+            result = results[1]
+
+        return label, result

@@ -9,3 +9,12 @@ scipy
 slidingwindow
 tqdm
 git+https://github.com/ppwwyyxx/tensorpack.git
+
+numpy
+
+six
+pillow
+opencv-python
+setuptools
+pyrebase
+pyfcm

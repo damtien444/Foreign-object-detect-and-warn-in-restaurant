@@ -47,21 +47,30 @@ if __name__ == '__main__':
 
     logger.debug('cam read+')
     # cam = cv2.VideoCapture(args.camera)
-    cam = VideoCapture('https://10.10.57.42:8080/video')
+    cam = VideoCapture('https://192.168.43.126:8080/video')
     image = cam.read()
     logger.info('cam image=%dx%d' % (image.shape[1], image.shape[0]))
 
     pre_state = "sitting"
     last = 0
 
+    session = label_img.SessionRun()
+
+
     # count = 0
     while True:
 
         image = cam.read()
 
+        # Call Openpose to export the human skeleton
         humans = e.inference(image, resize_to_default=(w > 0 and h > 0), upsample_size=args.resize_out_ratio)
 
         if len(humans) == 0:
+            cv2.imshow('tf-pose-estimation result', image)
+
+            if cv2.waitKey(1) == 27:
+                break
+
             continue
 
         img = draw_human(image, humans[0], imgcopy=False)
@@ -71,8 +80,8 @@ if __name__ == '__main__':
         image.fill(255)
         image = draw_human(image, humans[0], imgcopy=False)
 
-        # Classification
-        pose_class, poss = label_img.classify(image)
+        # Classification, using MobileNet V2
+        pose_class, poss = session.classify(image)
         print(pose_class)
         print(poss)
 

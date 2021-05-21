@@ -9,3 +9,5 @@ out
 gen
 
 yolo_tiny/path/*
+
+data/*
