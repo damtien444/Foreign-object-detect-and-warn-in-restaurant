@@ -16,7 +16,7 @@
 
 Architecture: https://arxiv.org/abs/1801.04381
 
-The base model gives 72.2% accuracy on ImageNet, with 300MMadds,
+The base models gives 72.2% accuracy on ImageNet, with 300MMadds,
 3.4 M parameters.
 """
 
@@ -27,7 +27,6 @@ from __future__ import print_function
 import copy
 
 import tensorflow as tf
-
 from nets.mobilenet import conv_blocks as ops
 from nets.mobilenet import mobilenet as lib
 
@@ -104,10 +103,10 @@ def mobilenet(input_tensor,
     num_classes: number of classes
     depth_multiplier: The multiplier applied to scale number of
     channels in each layer. Note: this is called depth multiplier in the
-    paper but the name is kept for consistency with slim's model builder.
+    paper but the name is kept for consistency with slim's models builder.
     scope: Scope of the operator
     conv_defs: Allows to override default conv def.
-    finegrain_classification_mode: When set to True, the model
+    finegrain_classification_mode: When set to True, the models
     will keep the last layer large even for small multipliers. Following
     https://arxiv.org/abs/1801.04381
     suggests that it improves performance for ImageNet-type of problems.
@@ -174,13 +173,13 @@ def training_scope(**kwargs):
   Args:
     **kwargs: Passed to mobilenet.training_scope. The following parameters
     are supported:
-      weight_decay- The weight decay to use for regularizing the model.
+      weight_decay- The weight decay to use for regularizing the models.
       stddev-  Standard deviation for initialization, if negative uses xavier.
       dropout_keep_prob- dropout keep probability
       bn_decay- decay for the batch norm moving averages.
 
   Returns:
-    An `arg_scope` to use for the mobilenet v2 model.
+    An `arg_scope` to use for the mobilenet v2 models.
   """
   return lib.training_scope(**kwargs)
 

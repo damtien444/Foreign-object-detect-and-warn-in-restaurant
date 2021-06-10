@@ -17,13 +17,13 @@
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
+
 import collections
 import contextlib
 import copy
 import os
 
 import tensorflow as tf
-
 
 slim = tf.contrib.slim
 
@@ -170,7 +170,7 @@ def mobilenet_base(  # pylint: disable=invalid-name
     multiplier: Float multiplier for the depth (number of channels)
       for all convolution ops. The value must be greater than zero. Typical
       usage will be to set this value in (0, 1) to reduce the number of
-      parameters or computation cost of the model.
+      parameters or computation cost of the models.
     final_endpoint: The name of last layer, for early termination for
     for V1-based networks: last layer is "layer_14", for V2: "layer_20"
     output_stride: An integer that specifies the requested ratio of input to
@@ -309,7 +309,7 @@ def mobilenet(inputs,
               scope='Mobilenet',
               base_only=False,
               **mobilenet_args):
-  """Mobilenet model for classification, supports both V1 and V2.
+  """Mobilenet models for classification, supports both V1 and V2.
 
   Note: default mode is inference, use mobilenet.training_scope to create
   training network.
@@ -332,7 +332,7 @@ def mobilenet(inputs,
       - multiplier: Float multiplier for the depth (number of channels)
       for all convolution ops. The value must be greater than zero. Typical
       usage will be to set this value in (0, 1) to reduce the number of
-      parameters or computation cost of the model.
+      parameters or computation cost of the models.
       - output_stride: will ensure that the last layer has at most total stride.
       If the architecture calls for more stride than that provided
       (e.g. output_stride=16, but the architecture has 5 stride=2 operators),
@@ -432,7 +432,7 @@ def training_scope(is_training=True,
       value False is not needed. If this is set to None, the parameters is not
       added to the batch_norm arg_scope.
 
-    weight_decay: The weight decay to use for regularizing the model.
+    weight_decay: The weight decay to use for regularizing the models.
     stddev: Standard deviation for initialization, if negative uses xavier.
     dropout_keep_prob: dropout keep probability (not set if equals to None).
     bn_decay: decay for the batch norm moving averages (not set if equals to
@@ -442,7 +442,7 @@ def training_scope(is_training=True,
     An argument scope to use via arg_scope.
   """
   # Note: do not introduce parameters that would change the inference
-  # model here (for example whether to use bias), modify conv_def instead.
+  # models here (for example whether to use bias), modify conv_def instead.
   batch_norm_params = {
       'decay': bn_decay,
       'is_training': is_training

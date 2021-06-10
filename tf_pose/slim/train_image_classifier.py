@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ==============================================================================
-"""Generic training script that trains a model using a given dataset."""
+"""Generic training script that trains a models using a given dataset."""
 
 from __future__ import absolute_import
 from __future__ import division
@@ -35,7 +35,7 @@ tf.app.flags.DEFINE_string(
     'Directory where checkpoints and event logs are written to.')
 
 tf.app.flags.DEFINE_integer('num_clones', 1,
-                            'Number of model clones to deploy.')
+                            'Number of models clones to deploy.')
 
 tf.app.flags.DEFINE_boolean('clone_on_cpu', False,
                             'Use CPUs to deploy clones.')
@@ -65,7 +65,7 @@ tf.app.flags.DEFINE_integer(
 
 tf.app.flags.DEFINE_integer(
     'save_interval_secs', 600,
-    'The frequency with which the model is saved, in seconds.')
+    'The frequency with which the models is saved, in seconds.')
 
 tf.app.flags.DEFINE_integer(
     'task', 0, 'Task id of the replica running the training.')
@@ -75,7 +75,7 @@ tf.app.flags.DEFINE_integer(
 ######################
 
 tf.app.flags.DEFINE_float(
-    'weight_decay', 0.00004, 'The weight decay on the model weights.')
+    'weight_decay', 0.00004, 'The weight decay on the models weights.')
 
 tf.app.flags.DEFINE_string(
     'optimizer', 'rmsprop',
@@ -315,7 +315,7 @@ def _configure_optimizer(learning_rate):
 def _get_init_fn():
   """Returns a function run by the chief worker to warm-start the training.
 
-  Note that the init_fn is only run when initializing the model during the very
+  Note that the init_fn is only run when initializing the models during the very
   first global step.
 
   Returns:
@@ -449,7 +449,7 @@ def main(_):
           [images, labels], capacity=2 * deploy_config.num_clones)
 
     ####################
-    # Define the model #
+    # Define the models #
     ####################
     def clone_fn(batch_queue):
       """Allows data parallelism by creating multiple clones of network_fn."""

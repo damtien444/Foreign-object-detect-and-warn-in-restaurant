@@ -2,13 +2,15 @@ import argparse
 import logging
 import time
 
-import cv2, queue, threading
+import cv2
 import numpy as np
+import queue
+import threading
 
+import scripts.label_image as label_img
 from tf_pose import common
 from tf_pose.estimator import TfPoseEstimator
 from tf_pose.networks import get_graph_path, model_wh
-import scripts.label_image as label_img
 
 logger = logging.getLogger('TfPoseEstimator-WebCam')
 logger.setLevel(logging.DEBUG)
@@ -149,7 +151,7 @@ if __name__ == '__main__':
     parser.add_argument('--resize-out-ratio', type=float, default=4.0,
                         help='if provided, resize heatmaps before they are post-processed. default=1.0')
 
-    parser.add_argument('--model', type=str, default='mobilenet_thin', help='cmu / mobilenet_thin')
+    parser.add_argument('--models', type=str, default='mobilenet_thin', help='cmu / mobilenet_thin')
     parser.add_argument('--show-process', type=bool, default=False,
                         help='for debug purpose, if enabled, speed for inference is dropped.')
     args = parser.parse_args()
@@ -220,5 +222,5 @@ if __name__ == '__main__':
 
 # =============================================================================
 # For running the script simply run the following in the cmd prompt/terminal :
-# python run_webcam.py --model=mobilenet_thin --resize=432x368 --camera=0
+# python run_webcam.py --models=mobilenet_thin --resize=432x368 --camera=0
 # =============================================================================

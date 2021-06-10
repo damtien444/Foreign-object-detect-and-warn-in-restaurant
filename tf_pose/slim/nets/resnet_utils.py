@@ -38,6 +38,7 @@ from __future__ import division
 from __future__ import print_function
 
 import collections
+
 import tensorflow as tf
 
 slim = tf.contrib.slim
@@ -233,7 +234,7 @@ def resnet_arg_scope(weight_decay=0.0001,
     training ResNets from scratch, they might need to be tuned.
 
   Args:
-    weight_decay: The weight decay to use for regularizing the model.
+    weight_decay: The weight decay to use for regularizing the models.
     batch_norm_decay: The moving average decay when estimating layer activation
       statistics in batch normalization.
     batch_norm_epsilon: Small constant to prevent division by zero when

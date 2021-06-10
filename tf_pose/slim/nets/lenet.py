@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ==============================================================================
-"""Contains a variant of the LeNet model definition."""
+"""Contains a variant of the LeNet models definition."""
 
 from __future__ import absolute_import
 from __future__ import division
@@ -27,7 +27,7 @@ def lenet(images, num_classes=10, is_training=False,
           dropout_keep_prob=0.5,
           prediction_fn=slim.softmax,
           scope='LeNet'):
-  """Creates a variant of the LeNet model.
+  """Creates a variant of the LeNet models.
 
   Note that since the output is a set of 'logits', the values fall in the
   interval of (-infinity, infinity). Consequently, to convert the outputs to a
@@ -43,7 +43,7 @@ def lenet(images, num_classes=10, is_training=False,
     num_classes: the number of classes in the dataset. If 0 or None, the logits
       layer is omitted and the input features to the logits layer are returned
       instead.
-    is_training: specifies whether or not we're currently training the model.
+    is_training: specifies whether or not we're currently training the models.
       This variable will determine the behaviour of the dropout layer.
     dropout_keep_prob: the percentage of activation values that are retained.
     prediction_fn: a function to get predictions out of logits.
@@ -84,10 +84,10 @@ def lenet_arg_scope(weight_decay=0.0):
   """Defines the default lenet argument scope.
 
   Args:
-    weight_decay: The weight decay to use for regularizing the model.
+    weight_decay: The weight decay to use for regularizing the models.
 
   Returns:
-    An `arg_scope` to use for the inception v3 model.
+    An `arg_scope` to use for the inception v3 models.
   """
   with slim.arg_scope(
       [slim.conv2d, slim.fully_connected],

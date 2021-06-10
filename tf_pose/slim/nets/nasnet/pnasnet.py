@@ -22,8 +22,8 @@ from __future__ import division
 from __future__ import print_function
 
 import copy
-import tensorflow as tf
 
+import tensorflow as tf
 from nets.nasnet import nasnet
 from nets.nasnet import nasnet_utils
 
@@ -49,7 +49,7 @@ def large_imagenet_config():
 
 def pnasnet_large_arg_scope(weight_decay=4e-5, batch_norm_decay=0.9997,
                             batch_norm_epsilon=0.001):
-  """Default arg scope for the PNASNet Large ImageNet model."""
+  """Default arg scope for the PNASNet Large ImageNet models."""
   return nasnet.nasnet_large_arg_scope(
       weight_decay, batch_norm_decay, batch_norm_epsilon)
 
@@ -60,7 +60,7 @@ def _build_pnasnet_base(images,
                         hparams,
                         is_training,
                         final_endpoint=None):
-  """Constructs a PNASNet image model."""
+  """Constructs a PNASNet image models."""
 
   end_points = {}
 
@@ -136,7 +136,7 @@ def build_pnasnet_large(images,
                         is_training=True,
                         final_endpoint=None,
                         config=None):
-  """Build PNASNet Large model for the ImageNet Dataset."""
+  """Build PNASNet Large models for the ImageNet Dataset."""
   hparams = copy.deepcopy(config) if config else large_imagenet_config()
   # pylint: disable=protected-access
   nasnet._update_hparams(hparams, is_training)
@@ -183,7 +183,7 @@ class PNasNetNormalCell(nasnet_utils.NasNetABaseCell):
 
   def __init__(self, num_conv_filters, drop_path_keep_prob, total_num_cells,
                total_training_steps):
-    # Configuration for the PNASNet-5 model.
+    # Configuration for the PNASNet-5 models.
     operations = [
         'separable_5x5_2', 'max_pool_3x3', 'separable_7x7_2', 'max_pool_3x3',
         'separable_5x5_2', 'separable_3x3_2', 'separable_3x3_2', 'max_pool_3x3',

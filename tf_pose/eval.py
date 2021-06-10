@@ -1,9 +1,10 @@
-import sys
-import os
-import numpy as np
-import logging
 import argparse
-import json, re
+import json
+import logging
+import os
+import sys
+
+import numpy as np
 from tqdm import tqdm
 
 from common import read_imgfile
@@ -45,7 +46,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Tensorflow Openpose Inference')
     parser.add_argument('--resize', type=str, default='0x0', help='if provided, resize images before they are processed. default=0x0, Recommends : 432x368 or 656x368 or 1312x736 ')
     parser.add_argument('--resize-out-ratio', type=float, default=8.0, help='if provided, resize heatmaps before they are post-processed. default=8.0')
-    parser.add_argument('--model', type=str, default='cmu', help='cmu / mobilenet_thin')
+    parser.add_argument('--models', type=str, default='cmu', help='cmu / mobilenet_thin')
     parser.add_argument('--cocoyear', type=str, default='2014')
     parser.add_argument('--coco-dir', type=str, default='/data/public/rw/coco/')
     parser.add_argument('--data-idx', type=int, default=-1)

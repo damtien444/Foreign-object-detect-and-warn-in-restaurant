@@ -16,14 +16,14 @@ r"""Simple transfer learning with Inception v3 or Mobilenet models.
 
 With support for TensorBoard.
 
-This example shows how to take a Inception v3 or Mobilenet model trained on
+This example shows how to take a Inception v3 or Mobilenet models trained on
 ImageNet images, and train a new top layer that can recognize other classes of
 images.
 
 The top layer receives as input a 2048-dimensional vector (1001-dimensional for
 Mobilenet) for each image. We train a softmax layer on top of this
 representation. Assuming the softmax layer contains N labels, this corresponds
-to learning N + 2048*N (or 1001*N)  model parameters corresponding to the
+to learning N + 2048*N (or 1001*N)  models parameters corresponding to the
 learned biases and weights.
 
 Here's an example, which assumes you have a folder containing class-named
@@ -60,14 +60,14 @@ You can replace the image_dir argument with any folder containing subfolders of
 images. The label for each image is taken from the name of the subfolder it's
 in.
 
-This produces a new model file that can be loaded and run by any TensorFlow
+This produces a new models file that can be loaded and run by any TensorFlow
 program, for example the label_image sample code.
 
 By default this script will use the high accuracy, but comparatively large and
-slow Inception v3 model architecture. It's recommended that you start with this
+slow Inception v3 models architecture. It's recommended that you start with this
 to validate that you have gathered good training data, but if you want to deploy
 on resource-limited platforms, you can try the `--architecture` flag with a
-Mobilenet model. For example:
+Mobilenet models. For example:
 
 ```bash
 python tensorflow/examples/image_retraining/retrain.py \
@@ -96,18 +96,17 @@ from __future__ import print_function
 
 import argparse
 import collections
-from datetime import datetime
 import hashlib
 import os.path
 import random
 import re
 import sys
 import tarfile
+from datetime import datetime
 
 import numpy as np
-from six.moves import urllib
 import tensorflow as tf
-
+from six.moves import urllib
 from tensorflow.python.framework import graph_util
 from tensorflow.python.framework import tensor_shape
 from tensorflow.python.platform import gfile
@@ -115,9 +114,9 @@ from tensorflow.python.util import compat
 
 FLAGS = None
 
-# These are all parameters that are tied to the particular model architecture
+# These are all parameters that are tied to the particular models architecture
 # we're using for Inception v3. These include things like tensor names and their
-# sizes. If you want to adapt this script to work with another model, you will
+# sizes. If you want to adapt this script to work with another models, you will
 # need to update these to reflect the values in the network you're using.
 MAX_NUM_IMAGES_PER_CLASS = 2 ** 27 - 1  # ~134M
 
@@ -250,7 +249,7 @@ def get_bottleneck_path(image_lists, label_name, index, bottleneck_dir,
     bottleneck_dir: Folder string holding cached files of bottleneck values.
     category: Name string of set to pull images from - training, testing, or
     validation.
-    architecture: The name of the model architecture.
+    architecture: The name of the models architecture.
 
   Returns:
     File system path string to an image that meets the requested parameters.
@@ -263,7 +262,7 @@ def create_model_graph(model_info):
   """"Creates a graph from saved GraphDef file and returns a Graph object.
 
   Args:
-    model_info: Dictionary containing information about the model architecture.
+    model_info: Dictionary containing information about the models architecture.
 
   Returns:
     Graph holding the trained Inception network, and various tensors we'll be
@@ -311,13 +310,13 @@ def run_bottleneck_on_image(sess, image_data, image_data_tensor,
 
 
 def maybe_download_and_extract(data_url):
-  """Download and extract model tar file.
+  """Download and extract models tar file.
 
-  If the pretrained model we're using doesn't already exist, this function
+  If the pretrained models we're using doesn't already exist, this function
   downloads it from the TensorFlow.org website and unpacks it into a directory.
 
   Args:
-    data_url: Web location of the tar file containing the pretrained model.
+    data_url: Web location of the tar file containing the pretrained models.
   """
   dest_directory = FLAGS.model_dir
   if not os.path.exists(dest_directory):
@@ -400,7 +399,7 @@ def get_or_create_bottleneck(sess, image_lists, label_name, index, image_dir,
     decoded_image_tensor: The output of decoding and resizing the image.
     resized_input_tensor: The input node of the recognition graph.
     bottleneck_tensor: The output tensor for the bottleneck values.
-    architecture: The name of the model architecture.
+    architecture: The name of the models architecture.
 
   Returns:
     Numpy array of values produced by the bottleneck layer for the image.
@@ -459,7 +458,7 @@ def cache_bottlenecks(sess, image_lists, image_dir, bottleneck_dir,
     decoded_image_tensor: The output of decoding and resizing the image.
     resized_input_tensor: The input node of the recognition graph.
     bottleneck_tensor: The penultimate output layer of the graph.
-    architecture: The name of the model architecture.
+    architecture: The name of the models architecture.
 
   Returns:
     Nothing.
@@ -505,7 +504,7 @@ def get_random_cached_bottlenecks(sess, image_lists, how_many, category,
     decoded_image_tensor: The output of decoding and resizing the image.
     resized_input_tensor: The input node of the recognition graph.
     bottleneck_tensor: The bottleneck output layer of the CNN graph.
-    architecture: The name of the model architecture.
+    architecture: The name of the models architecture.
 
   Returns:
     List of bottleneck arrays, their corresponding ground truths, and the
@@ -557,7 +556,7 @@ def get_random_distorted_bottlenecks(
   """Retrieves bottleneck values for training images, after distortions.
 
   If we're training with distortions like crops, scales, or flips, we have to
-  recalculate the full model for every image, and so we can't use cached
+  recalculate the full models for every image, and so we can't use cached
   bottleneck values. Instead we find random images for the requested category,
   run them through the distortion graph, and then the full graph to get the
   bottleneck results for each.
@@ -631,7 +630,7 @@ def add_input_distortions(flip_left_right, random_crop, random_scale,
   During training it can help to improve the results if we run the images
   through simple distortions like crops, scales, and flips. These reflect the
   kind of variations we expect in the real world, and so can help train the
-  model to cope with natural data more effectively. Here we take the supplied
+  models to cope with natural data more effectively. Here we take the supplied
   parameters and construct a network of operations to apply them to an image.
 
   Cropping
@@ -673,8 +672,8 @@ def add_input_distortions(flip_left_right, random_crop, random_scale,
     random_scale: Integer percentage of how much to vary the scale by.
     random_brightness: Integer range to randomly multiply the pixel values by.
     graph.
-    input_width: Horizontal size of expected input image to model.
-    input_height: Vertical size of expected input image to model.
+    input_width: Horizontal size of expected input image to models.
+    input_height: Vertical size of expected input image to models.
     input_depth: How many channels the expected input image should have.
     input_mean: Pixel value that should be zero in the image for the graph.
     input_std: How much to divide the pixel values by before recognition.
@@ -841,17 +840,17 @@ def prepare_file_system():
 
 
 def create_model_info(architecture):
-  """Given the name of a model architecture, returns information about it.
+  """Given the name of a models architecture, returns information about it.
 
   There are different base image recognition pretrained models that can be
   retrained using transfer learning, and this function translates from the name
-  of a model to the attributes that are needed to download and train with it.
+  of a models to the attributes that are needed to download and train with it.
 
   Args:
-    architecture: Name of a model architecture.
+    architecture: Name of a models architecture.
 
   Returns:
-    Dictionary of information about the model, or None if the name isn't
+    Dictionary of information about the models, or None if the name isn't
     recognized
 
   Raises:
@@ -878,7 +877,7 @@ def create_model_info(architecture):
                        architecture)
       return None
     version_string = parts[1]
-    if (version_string != '1.0' and version_string != '0.75' and
+    if (version_string != '1.00' and version_string != '0.75' and
         version_string != '0.50' and version_string != '0.25'):
       tf.logging.error(
           """"The Mobilenet version should be '1.0', '0.75', '0.50', or '0.25',
@@ -903,6 +902,7 @@ def create_model_info(architecture):
         return None
       is_quantized = True
     data_url = 'http://download.tensorflow.org/models/mobilenet_v1_'
+    # http://download.tensorflow.org/models/mobilenet_v2_1.0_224_frozen.tgz
     data_url += version_string + '_' + size_string + '_frozen.tgz'
     bottleneck_tensor_name = 'MobilenetV1/Predictions/Reshape:0'
     bottleneck_tensor_size = 1001
@@ -972,7 +972,7 @@ def main(_):
   # Prepare necessary directories  that can be used during training
   prepare_file_system()
 
-  # Gather information about the model architecture we'll be using.
+  # Gather information about the models architecture we'll be using.
   model_info = create_model_info(FLAGS.architecture)
   if not model_info:
     tf.logging.error('Did not recognize architecture flag')
@@ -1223,7 +1223,7 @@ if __name__ == '__main__':
       default=-1,
       help="""\
       How many images to test on. This test set is only used once, to evaluate
-      the final accuracy of the model after training completes.
+      the final accuracy of the models after training completes.
       A value of -1 causes the entire test set to be used, which leads to more
       stable results across runs.\
       """
@@ -1235,7 +1235,7 @@ if __name__ == '__main__':
       help="""\
       How many images to use in an evaluation batch. This validation set is
       used much more often than the test set, and is an early indicator of how
-      accurate the model is during training.
+      accurate the models is during training.
       A value of -1 causes the entire validation set to be used, which leads to
       more stable results across training iterations, but may be slower on large
       training sets.\
@@ -1311,12 +1311,12 @@ if __name__ == '__main__':
   parser.add_argument(
       '--architecture',
       type=str,
-      default='inception_v3',
+      default='mobilenet_1.00_224',
       help="""\
-      Which model architecture to use. 'inception_v3' is the most accurate, but
+      Which models architecture to use. 'inception_v3' is the most accurate, but
       also the slowest. For faster or smaller models, chose a MobileNet with the
       form 'mobilenet_<parameter size>_<input_size>[_quantized]'. For example,
-      'mobilenet_1.0_224' will pick a model that is 17 MB in size and takes 224
+      'mobilenet_1.0_224' will pick a models that is 17 MB in size and takes 224
       pixel input images, while 'mobilenet_0.25_128_quantized' will choose a much
       less accurate, but smaller and faster network that's 920 KB on disk and
       takes 128x128 images. See https://research.googleblog.com/2017/06/mobilenets-open-source-models-for.html

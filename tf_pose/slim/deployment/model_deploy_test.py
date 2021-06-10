@@ -20,7 +20,6 @@ from __future__ import print_function
 
 import numpy as np
 import tensorflow as tf
-
 from deployment import model_deploy
 
 slim = tf.contrib.slim
@@ -543,7 +542,7 @@ class DeployTest(tf.test.TestCase):
       model = model_deploy.deploy(
           deploy_config, ModelFn,
           optimizer=tf.train.GradientDescentOptimizer(1.0))
-      # The model summary op should have a few summary inputs and all of them
+      # The models summary op should have a few summary inputs and all of them
       # should be on the CPU.
       self.assertTrue(model.summary_op.op.inputs)
       for inp in  model.summary_op.op.inputs:
@@ -561,7 +560,7 @@ class DeployTest(tf.test.TestCase):
 
       # No optimizer here, it's an eval.
       model = model_deploy.deploy(deploy_config, ModelFn)
-      # The model summary op should have a few summary inputs and all of them
+      # The models summary op should have a few summary inputs and all of them
       # should be on the CPU.
       self.assertTrue(model.summary_op.op.inputs)
       for inp in  model.summary_op.op.inputs:

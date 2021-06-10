@@ -1,8 +1,9 @@
-import cv2
 import argparse
-import numpy as np
 import time
-import tensorflow
+
+import cv2
+import numpy as np
+
 ap = argparse.ArgumentParser()
 ap.add_argument('-i', '--image', default='image/maxresdefault.jpg',
                 help='path to input image')

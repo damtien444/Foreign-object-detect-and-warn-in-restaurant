@@ -12,13 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ==============================================================================
-"""Generic evaluation script that evaluates a model using a given dataset."""
+"""Generic evaluation script that evaluates a models using a given dataset."""
 
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
 import math
+
 import tensorflow as tf
 
 from datasets import dataset_factory
@@ -39,7 +40,7 @@ tf.app.flags.DEFINE_string(
 
 tf.app.flags.DEFINE_string(
     'checkpoint_path', '/tmp/tfmodel/',
-    'The directory where the model was written to or an absolute path to a '
+    'The directory where the models was written to or an absolute path to a '
     'checkpoint file.')
 
 tf.app.flags.DEFINE_string(
@@ -97,7 +98,7 @@ def main(_):
         FLAGS.dataset_name, FLAGS.dataset_split_name, FLAGS.dataset_dir)
 
     ####################
-    # Select the model #
+    # Select the models #
     ####################
     network_fn = nets_factory.get_network_fn(
         FLAGS.model_name,
@@ -134,7 +135,7 @@ def main(_):
         capacity=5 * FLAGS.batch_size)
 
     ####################
-    # Define the model #
+    # Define the models #
     ####################
     logits, _ = network_fn(images)
 

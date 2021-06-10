@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ==============================================================================
-"""Process the ImageNet Challenge bounding boxes for TensorFlow model training.
+"""Process the ImageNet Challenge bounding boxes for TensorFlow models training.
 
 This script is called as
 
@@ -85,6 +85,7 @@ import glob
 import os.path
 import sys
 import xml.etree.ElementTree as ET
+
 from six.moves import xrange  # pylint: disable=redefined-builtin
 
 

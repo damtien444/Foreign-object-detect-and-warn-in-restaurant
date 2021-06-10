@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # =============================================================================
-"""Implementation of the Image-to-Image Translation model.
+"""Implementation of the Image-to-Image Translation models.
 
 This network represents a port of the following work:
 
@@ -100,7 +100,7 @@ class Block(
   """Represents a single block of encoder and decoder processing.
 
   The Image-to-Image translation paper works a bit differently than the original
-  U-Net model. In particular, each block represents a single operation in the
+  U-Net models. In particular, each block represents a single operation in the
   encoder which is concatenated with the corresponding decoder representation.
   A dropout layer follows the concatenation and convolution of the concatenated
   features.
@@ -143,7 +143,7 @@ def pix2pix_generator(net,
     is_training: Whether or not we're in training or testing mode.
 
   Returns:
-    A `Tensor` representing the model output and a dictionary of model end
+    A `Tensor` representing the models output and a dictionary of models end
       points.
 
   Raises:
@@ -231,11 +231,11 @@ def pix2pix_discriminator(net, num_filters, padding=2, is_training=False):
     num_filters: A list of the filters in the discriminator. The length of the
       list determines the number of layers in the discriminator.
     padding: Amount of reflection padding applied before each convolution.
-    is_training: Whether or not the model is training or testing.
+    is_training: Whether or not the models is training or testing.
 
   Returns:
     A logits `Tensor` of size [batch_size, N, N, 1] where N is the number of
-    'patches' we're attempting to discriminate and a dictionary of model end
+    'patches' we're attempting to discriminate and a dictionary of models end
     points.
   """
   del is_training

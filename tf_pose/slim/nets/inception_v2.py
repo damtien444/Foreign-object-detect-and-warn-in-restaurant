@@ -19,7 +19,6 @@ from __future__ import division
 from __future__ import print_function
 
 import tensorflow as tf
-
 from nets import inception_utils
 
 slim = tf.contrib.slim
@@ -52,7 +51,7 @@ def inception_v2_base(inputs,
     depth_multiplier: Float multiplier for the depth (number of channels)
       for all convolution ops. The value must be greater than zero. Typical
       usage will be to set this value in (0, 1) to reduce the number of
-      parameters or computation cost of the model.
+      parameters or computation cost of the models.
     use_separable_conv: Use a separable convolution for the first layer
       Conv2d_1a_7x7. If this is False, use a normal convolution instead.
     data_format: Data format of the activations ('NHWC' or 'NCHW').
@@ -460,7 +459,7 @@ def inception_v2(inputs,
                  reuse=None,
                  scope='InceptionV2',
                  global_pool=False):
-  """Inception v2 model for classification.
+  """Inception v2 models for classification.
 
   Constructs an Inception v2 network for classification as described in
   http://arxiv.org/abs/1502.03167.
@@ -480,7 +479,7 @@ def inception_v2(inputs,
     depth_multiplier: Float multiplier for the depth (number of channels)
       for all convolution ops. The value must be greater than zero. Typical
       usage will be to set this value in (0, 1) to reduce the number of
-      parameters or computation cost of the model.
+      parameters or computation cost of the models.
     prediction_fn: a function to get predictions out of logits.
     spatial_squeeze: if True, logits is of shape [B, C], if false logits is of
         shape [B, 1, 1, C], where B is batch_size and C is number of classes.

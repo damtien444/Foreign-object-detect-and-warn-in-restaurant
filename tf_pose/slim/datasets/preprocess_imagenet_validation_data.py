@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ==============================================================================
-r"""Process the ImageNet Challenge bounding boxes for TensorFlow model training.
+r"""Process the ImageNet Challenge bounding boxes for TensorFlow models training.
 
 Associate the ImageNet 2012 Challenge validation data set with labels.
 
@@ -52,7 +52,6 @@ import os
 import sys
 
 from six.moves import xrange  # pylint: disable=redefined-builtin
-
 
 if __name__ == '__main__':
   if len(sys.argv) < 3:

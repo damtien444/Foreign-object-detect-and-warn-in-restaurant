@@ -1,14 +1,11 @@
 #!/usr/bin/env python
-import time
 import os
 import sys
-import ast
-
 from threading import Lock
-import rospy
+
 import rospkg
+import rospy
 from cv_bridge import CvBridge, CvBridgeError
-from std_msgs.msg import String
 from sensor_msgs.msg import Image
 from tfpose_ros.msg import Persons, Person, BodyPartElm
 
@@ -67,7 +64,7 @@ if __name__ == '__main__':
 
     # parameters
     image_topic = rospy.get_param('~camera', '')
-    model = rospy.get_param('~model', 'cmu')
+    model = rospy.get_param('~models', 'cmu')
 
     resolution = rospy.get_param('~resolution', '432x368')
     resize_out_ratio = float(rospy.get_param('~resize_out_ratio', '4.0'))
@@ -84,7 +81,7 @@ if __name__ == '__main__':
         rospack = rospkg.RosPack()
         graph_path = os.path.join(rospack.get_path('tfpose_ros'), graph_path)
     except Exception as e:
-        rospy.logerr('invalid model: %s, e=%s' % (model, e))
+        rospy.logerr('invalid models: %s, e=%s' % (model, e))
         sys.exit(-1)
 
     pose_estimator = TfPoseEstimator(graph_path, target_size=(w, h))

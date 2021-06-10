@@ -21,8 +21,8 @@ from __future__ import division
 from __future__ import print_function
 
 import copy
-import tensorflow as tf
 
+import tensorflow as tf
 from nets.nasnet import nasnet_utils
 
 arg_scope = tf.contrib.framework.arg_scope
@@ -55,7 +55,7 @@ def cifar_config():
   )
 
 
-# Notes for training large NASNet model on ImageNet
+# Notes for training large NASNet models on ImageNet
 # -------------------------------------
 # batch size (per replica): 16
 # learning rate: 0.015 * 100
@@ -81,7 +81,7 @@ def large_imagenet_config():
   )
 
 
-# Notes for training the mobile NASNet ImageNet model
+# Notes for training the mobile NASNet ImageNet models
 # -------------------------------------
 # batch size (per replica): 32
 # learning rate: 0.04 * 50
@@ -116,10 +116,10 @@ def _update_hparams(hparams, is_training):
 def nasnet_cifar_arg_scope(weight_decay=5e-4,
                            batch_norm_decay=0.9,
                            batch_norm_epsilon=1e-5):
-  """Defines the default arg scope for the NASNet-A Cifar model.
+  """Defines the default arg scope for the NASNet-A Cifar models.
 
   Args:
-    weight_decay: The weight decay to use for regularizing the model.
+    weight_decay: The weight decay to use for regularizing the models.
     batch_norm_decay: Decay for batch norm moving average.
     batch_norm_epsilon: Small float added to variance to avoid dividing by zero
       in batch norm.
@@ -152,10 +152,10 @@ def nasnet_cifar_arg_scope(weight_decay=5e-4,
 def nasnet_mobile_arg_scope(weight_decay=4e-5,
                             batch_norm_decay=0.9997,
                             batch_norm_epsilon=1e-3):
-  """Defines the default arg scope for the NASNet-A Mobile ImageNet model.
+  """Defines the default arg scope for the NASNet-A Mobile ImageNet models.
 
   Args:
-    weight_decay: The weight decay to use for regularizing the model.
+    weight_decay: The weight decay to use for regularizing the models.
     batch_norm_decay: Decay for batch norm moving average.
     batch_norm_epsilon: Small float added to variance to avoid dividing by zero
       in batch norm.
@@ -188,10 +188,10 @@ def nasnet_mobile_arg_scope(weight_decay=4e-5,
 def nasnet_large_arg_scope(weight_decay=5e-5,
                            batch_norm_decay=0.9997,
                            batch_norm_epsilon=1e-3):
-  """Defines the default arg scope for the NASNet-A Large ImageNet model.
+  """Defines the default arg scope for the NASNet-A Large ImageNet models.
 
   Args:
-    weight_decay: The weight decay to use for regularizing the model.
+    weight_decay: The weight decay to use for regularizing the models.
     batch_norm_decay: Decay for batch norm moving average.
     batch_norm_epsilon: Small float added to variance to avoid dividing by zero
       in batch norm.
@@ -287,7 +287,7 @@ def _cifar_stem(inputs, hparams):
 def build_nasnet_cifar(images, num_classes,
                        is_training=True,
                        config=None):
-  """Build NASNet model for the Cifar Dataset."""
+  """Build NASNet models for the Cifar Dataset."""
   hparams = cifar_config() if config is None else copy.deepcopy(config)
   _update_hparams(hparams, is_training)
 
@@ -334,7 +334,7 @@ def build_nasnet_mobile(images, num_classes,
                         is_training=True,
                         final_endpoint=None,
                         config=None):
-  """Build NASNet Mobile model for the ImageNet Dataset."""
+  """Build NASNet Mobile models for the ImageNet Dataset."""
   hparams = (mobile_imagenet_config() if config is None
              else copy.deepcopy(config))
   _update_hparams(hparams, is_training)
@@ -385,7 +385,7 @@ def build_nasnet_large(images, num_classes,
                        is_training=True,
                        final_endpoint=None,
                        config=None):
-  """Build NASNet Large model for the ImageNet Dataset."""
+  """Build NASNet Large models for the ImageNet Dataset."""
   hparams = (large_imagenet_config() if config is None
              else copy.deepcopy(config))
   _update_hparams(hparams, is_training)
@@ -440,7 +440,7 @@ def _build_nasnet_base(images,
                        is_training,
                        stem_type,
                        final_endpoint=None):
-  """Constructs a NASNet image model."""
+  """Constructs a NASNet image models."""
 
   end_points = {}
   def add_and_check_endpoint(endpoint_name, net):

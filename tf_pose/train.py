@@ -28,7 +28,7 @@ logger.addHandler(ch)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Training codes for Openpose using Tensorflow')
-    parser.add_argument('--model', default='personlab_resnet101', help='model name')
+    parser.add_argument('--models', default='personlab_resnet101', help='models name')
     parser.add_argument('--datapath', type=str, default='/data/public/rw/coco/annotations')
     parser.add_argument('--imgpath', type=str, default='/data/public/rw/coco/')
     parser.add_argument('--batchsize', type=int, default=96)
@@ -58,7 +58,7 @@ if __name__ == '__main__':
     set_network_scale(scale)
     output_w, output_h = args.input_width // scale, args.input_height // scale
 
-    logger.info('define model+')
+    logger.info('define models+')
     with tf.device(tf.DeviceSpec(device_type="CPU")):
         input_node = tf.placeholder(tf.float32, shape=(args.batchsize, args.input_height, args.input_width, 3), name='image')
         vectmap_node = tf.placeholder(tf.float32, shape=(args.batchsize, output_h, output_w, 38), name='vectmap')
@@ -83,7 +83,7 @@ if __name__ == '__main__':
     logger.info(q_heat)
     logger.info(q_vect)
 
-    # define model for multi-gpu
+    # define models for multi-gpu
     q_inp_split, q_heat_split, q_vect_split = tf.split(q_inp, args.gpus), tf.split(q_heat, args.gpus), tf.split(q_vect, args.gpus)
 
     output_vectmap = []
@@ -136,7 +136,7 @@ if __name__ == '__main__':
     update_ops = tf.get_collection(tf.GraphKeys.UPDATE_OPS)
     with tf.control_dependencies(update_ops):
         train_op = optimizer.minimize(total_loss, global_step, colocate_gradients_with_ops=True)
-    logger.info('define model-')
+    logger.info('define models-')
 
     # define summary
     tf.summary.scalar("loss", total_loss)
@@ -169,7 +169,7 @@ if __name__ == '__main__':
             args.input_width, args.input_height,
             args.tag
         )
-        logger.info('model weights initialization')
+        logger.info('models weights initialization')
         sess.run(tf.global_variables_initializer())
 
         if args.checkpoint:
@@ -218,7 +218,7 @@ if __name__ == '__main__':
 
             if gs_num - last_gs_num2 >= 1000:
                 # save weights
-                saver.save(sess, os.path.join(args.modelpath, training_name, 'model'), global_step=global_step)
+                saver.save(sess, os.path.join(args.modelpath, training_name, 'models'), global_step=global_step)
 
                 average_loss = average_loss_ll = average_loss_ll_paf = average_loss_ll_heat = 0
                 total_cnt = 0
@@ -277,5 +277,5 @@ if __name__ == '__main__':
                 })
                 file_writer.add_summary(summary, gs_num)
 
-        saver.save(sess, os.path.join(args.modelpath, training_name, 'model'), global_step=global_step)
+        saver.save(sess, os.path.join(args.modelpath, training_name, 'models'), global_step=global_step)
     logger.info('optimization finished. %f' % (time.time() - time_started))

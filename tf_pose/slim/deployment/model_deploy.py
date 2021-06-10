@@ -17,11 +17,11 @@
 # TODO(sguada) docstring paragraph by (a) motivating the need for the file and
 # (b) defining clones.
 
-# TODO(sguada) describe the high-level components of model deployment.
-# E.g. "each model deployment is composed of several parts: a DeploymentConfig,
+# TODO(sguada) describe the high-level components of models deployment.
+# E.g. "each models deployment is composed of several parts: a DeploymentConfig,
 # which captures A, B and C, an input_fn which loads data.. etc
 
-To easily train a model on multiple GPUs or across multiple machines this
+To easily train a models on multiple GPUs or across multiple machines this
 module provides a set of helper functions: `create_clones`,
 `optimize_clones` and `deploy`.
 
@@ -45,7 +45,7 @@ Usage:
   with tf.device(config.optimizer_device()):
     optimizer = tf.train.MomentumOptimizer(FLAGS.learning_rate, FLAGS.momentum)
 
-  # Define the model including the loss.
+  # Define the models including the loss.
   def model_fn(inputs_queue):
     images, labels = inputs_queue.dequeue()
     predictions = CreateNetwork(images)
@@ -76,9 +76,9 @@ clones:
   * clones: List of `Clone` tuples returned by `create_clones()`.
 
 DeploymentConfig parameters:
-  * num_clones: Number of model clones to deploy in each replica.
+  * num_clones: Number of models clones to deploy in each replica.
   * clone_on_cpu: True if clones should be placed on CPU.
-  * replica_id: Integer.  Index of the replica for which the model is
+  * replica_id: Integer.  Index of the replica for which the models is
       deployed.  Usually 0 for the chief replica.
   * num_replicas: Number of replicas to use.
   * num_ps_tasks: Number of tasks for the `ps` job. 0 to not use replicas.
@@ -162,11 +162,11 @@ def create_clones(config, model_fn, args=None, kwargs=None):
   of such clones.
 
   The argument `model_fn` is called `config.num_clones` times to create the
-  model clones as `model_fn(*args, **kwargs)`.
+  models clones as `model_fn(*args, **kwargs)`.
 
   If `config` specifies deployment on multiple replicas then the default
   tensorflow device is set appropriatly for each call to `model_fn` and for the
-  slim variable creation functions: model and global variables will be created
+  slim variable creation functions: models and global variables will be created
   on the `ps` device, the clone operations will be on the `worker` device.
 
   Args:
@@ -315,21 +315,21 @@ def deploy(config,
            kwargs=None,
            optimizer=None,
            summarize_gradients=False):
-  """Deploys a Slim-constructed model across multiple clones.
+  """Deploys a Slim-constructed models across multiple clones.
 
   The deployment options are specified by the config object and support
   deploying one or several clones on different GPUs and one or several replicas
   of such clones.
 
   The argument `model_fn` is called `config.num_clones` times to create the
-  model clones as `model_fn(*args, **kwargs)`.
+  models clones as `model_fn(*args, **kwargs)`.
 
   The optional argument `optimizer` is an `Optimizer` object.  If not `None`,
-  the deployed model is configured for training with that optimizer.
+  the deployed models is configured for training with that optimizer.
 
   If `config` specifies deployment on multiple replicas then the default
   tensorflow device is set appropriatly for each call to `model_fn` and for the
-  slim variable creation functions: model and global variables will be created
+  slim variable creation functions: models and global variables will be created
   on the `ps` device, the clone operations will be on the `worker` device.
 
   Args:
@@ -337,7 +337,7 @@ def deploy(config,
     model_fn: A callable. Called as `model_fn(*args, **kwargs)`
     args: Optional list of arguments to pass to `model_fn`.
     kwargs: Optional list of keyword arguments to pass to `model_fn`.
-    optimizer: Optional `Optimizer` object.  If passed the model is deployed
+    optimizer: Optional `Optimizer` object.  If passed the models is deployed
       for training with that optimizer.
     summarize_gradients: Whether or not add summaries to the gradients.
 
@@ -474,10 +474,10 @@ def _add_gradients_summaries(grads_and_vars):
 
 
 class DeploymentConfig(object):
-  """Configuration for deploying a model with `deploy()`.
+  """Configuration for deploying a models with `deploy()`.
 
   You can pass an instance of this class to `deploy()` to specify exactly
-  how to deploy the model to build.  If you do not pass one, an instance built
+  how to deploy the models to build.  If you do not pass one, an instance built
   from the default deployment_hparams will be used.
   """
 
@@ -491,11 +491,11 @@ class DeploymentConfig(object):
                ps_job_name='ps'):
     """Create a DeploymentConfig.
 
-    The config describes how to deploy a model across multiple clones and
-    replicas.  The model will be replicated `num_clones` times in each replica.
+    The config describes how to deploy a models across multiple clones and
+    replicas.  The models will be replicated `num_clones` times in each replica.
     If `clone_on_cpu` is True, each clone will placed on CPU.
 
-    If `num_replicas` is 1, the model is deployed via a single process.  In that
+    If `num_replicas` is 1, the models is deployed via a single process.  In that
     case `worker_device`, `num_ps_tasks`, and `ps_device` are ignored.
 
     If `num_replicas` is greater than 1, then `worker_device` and `ps_device`
@@ -503,9 +503,9 @@ class DeploymentConfig(object):
     `num_ps_tasks` must be positive.
 
     Args:
-      num_clones: Number of model clones to deploy in each replica.
+      num_clones: Number of models clones to deploy in each replica.
       clone_on_cpu: If True clones would be placed on CPU.
-      replica_id: Integer.  Index of the replica for which the model is
+      replica_id: Integer.  Index of the replica for which the models is
         deployed.  Usually 0 for the chief replica.
       num_replicas: Number of replicas to use.
       num_ps_tasks: Number of tasks for the `ps` job. 0 to not use replicas.

@@ -16,8 +16,8 @@
 #
 # This script performs the following operations:
 # 1. Downloads the MNIST dataset
-# 2. Trains a LeNet model on the MNIST training set.
-# 3. Evaluates the model on the MNIST testing set.
+# 2. Trains a LeNet models on the MNIST training set.
+# 3. Evaluates the models on the MNIST testing set.
 #
 # Usage:
 # cd slim

@@ -18,8 +18,8 @@ from __future__ import division
 from __future__ import print_function
 
 import numpy as np
-from six.moves import xrange  # pylint: disable=redefined-builtin
 import tensorflow as tf
+from six.moves import xrange  # pylint: disable=redefined-builtin
 
 layers = tf.contrib.layers
 
@@ -106,7 +106,7 @@ def cyclegan_upsample(net, num_outputs, stride, method='conv2d_transpose'):
       # This corrects 1 pixel offset for images with even width and height.
       # conv2d is left aligned and conv2d_transpose is right aligned for even
       # sized images (while doing 'SAME' padding).
-      # Note: This doesn't reflect actual model in paper.
+      # Note: This doesn't reflect actual models in paper.
       net = layers.conv2d_transpose(
           net, num_outputs, kernel_size=[3, 3], stride=stride, padding='valid')
       net = net[:, 1:, 1:, :]
@@ -158,7 +158,7 @@ def cyclegan_generator_resnet(images,
       network functions.
 
   Returns:
-    A `Tensor` representing the model output and a dictionary of model end
+    A `Tensor` representing the models output and a dictionary of models end
       points.
 
   Raises:

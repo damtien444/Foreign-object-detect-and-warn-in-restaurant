@@ -19,8 +19,8 @@ from __future__ import division
 from __future__ import print_function
 
 import math
-import tensorflow as tf
 
+import tensorflow as tf
 from datasets import dataset_factory
 from nets import mobilenet_v1
 from preprocessing import preprocessing_factory
@@ -102,7 +102,7 @@ def metrics(logits, labels):
 
 
 def build_model():
-  """Build the mobilenet_v1 model for evaluation.
+  """Build the mobilenet_v1 models for evaluation.
 
   Returns:
     g: graph with rewrites after insertion of quantization ops and batch norm

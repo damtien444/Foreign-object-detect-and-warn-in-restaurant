@@ -16,8 +16,8 @@
 #
 # This script performs the following operations:
 # 1. Downloads the Flowers dataset
-# 2. Fine-tunes an InceptionV3 model on the Flowers training set.
-# 3. Evaluates the model on the Flowers validation set.
+# 2. Fine-tunes an InceptionV3 models on the Flowers training set.
+# 3. Evaluates the models on the Flowers validation set.
 #
 # Usage:
 # cd slim

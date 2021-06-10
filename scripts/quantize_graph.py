@@ -27,11 +27,11 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
-import os
 import collections
+import os
 import re
-import numpy as np
 
+import numpy as np
 from tensorflow.core.framework import attr_value_pb2
 from tensorflow.core.framework import graph_pb2
 from tensorflow.core.framework import node_def_pb2
@@ -51,7 +51,7 @@ from tensorflow.python.platform import gfile
 flags = flags_lib
 FLAGS = flags.FLAGS
 
-flags.DEFINE_boolean("print_nodes", False, """Lists all nodes in the model.""")
+flags.DEFINE_boolean("print_nodes", False, """Lists all nodes in the models.""")
 flags.DEFINE_string("input", "", """TensorFlow 'GraphDef' file to load.""")
 flags.DEFINE_string("output_node_names", "",
                     """Output node names, comma separated.""")
@@ -248,7 +248,7 @@ def quantize_weight_rounded(input_node):
   # number of buckets as 1 << FLAGS.bitdepth, meaning the number of
   # buckets can only be a power of 2.
   # This could be fixed by introducing a new parameter, num_buckets,
-  # which would allow for more flexibility in chosing the right model
+  # which would allow for more flexibility in chosing the right models
   # size/accuracy tradeoff. But I didn't want to add more parameters
   # to this script than absolutely necessary.
   num_buckets = 1 << FLAGS.bitdepth
@@ -1091,7 +1091,7 @@ class GraphRewriter(object):
     removal pass to get rid of any nodes that are no longer needed.
 
     Args:
-      old_graph: The model we'll be stripping redundant nodes from.
+      old_graph: The models we'll be stripping redundant nodes from.
 
     Returns:
       A graph with the unnecessary nodes removed.
@@ -1198,7 +1198,7 @@ class GraphRewriter(object):
     1. If quantization_mode is "weights_rounded", this function replaces float
     Const ops with quantized float Const ops - same as the original op, but
     float values being mapped to the center of one of 1<<FLAGS.bitdepth buckets.
-    This does not change the raw model size, but compression algorithms such as
+    This does not change the raw models size, but compression algorithms such as
     zip (as used for compressing apks) or bzip2 will achieve a very good
     compression ratio.
     2. For other quantization modes ("MIN_COMBINED" or "MIN_FIRST"), float
@@ -1213,7 +1213,7 @@ class GraphRewriter(object):
     unfortunately.
 
     Args:
-      input_graph: A GraphDef of the model containing float Const ops.
+      input_graph: A GraphDef of the models containing float Const ops.
       quantization_mode: How to quantize and dequantize the values.
 
     Returns:

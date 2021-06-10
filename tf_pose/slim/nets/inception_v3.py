@@ -19,7 +19,6 @@ from __future__ import division
 from __future__ import print_function
 
 import tensorflow as tf
-
 from nets import inception_utils
 
 slim = tf.contrib.slim
@@ -31,7 +30,7 @@ def inception_v3_base(inputs,
                       min_depth=16,
                       depth_multiplier=1.0,
                       scope=None):
-  """Inception model from http://arxiv.org/abs/1512.00567.
+  """Inception models from http://arxiv.org/abs/1512.00567.
 
   Constructs an Inception v3 network from inputs to the given final endpoint.
   This method can construct the network up to the final inception block
@@ -76,7 +75,7 @@ def inception_v3_base(inputs,
     depth_multiplier: Float multiplier for the depth (number of channels)
       for all convolution ops. The value must be greater than zero. Typical
       usage will be to set this value in (0, 1) to reduce the number of
-      parameters or computation cost of the model.
+      parameters or computation cost of the models.
     scope: Optional variable_scope.
 
   Returns:
@@ -428,14 +427,14 @@ def inception_v3(inputs,
                  create_aux_logits=True,
                  scope='InceptionV3',
                  global_pool=False):
-  """Inception model from http://arxiv.org/abs/1512.00567.
+  """Inception models from http://arxiv.org/abs/1512.00567.
 
   "Rethinking the Inception Architecture for Computer Vision"
 
   Christian Szegedy, Vincent Vanhoucke, Sergey Ioffe, Jonathon Shlens,
   Zbigniew Wojna.
 
-  With the default arguments this method constructs the exact model defined in
+  With the default arguments this method constructs the exact models defined in
   the paper. However, one can experiment with variations of the inception_v3
   network by changing arguments dropout_keep_prob, min_depth and
   depth_multiplier.
@@ -455,7 +454,7 @@ def inception_v3(inputs,
     depth_multiplier: Float multiplier for the depth (number of channels)
       for all convolution ops. The value must be greater than zero. Typical
       usage will be to set this value in (0, 1) to reduce the number of
-      parameters or computation cost of the model.
+      parameters or computation cost of the models.
     prediction_fn: a function to get predictions out of logits.
     spatial_squeeze: if True, logits is of shape [B, C], if false logits is of
         shape [B, 1, 1, C], where B is batch_size and C is number of classes.

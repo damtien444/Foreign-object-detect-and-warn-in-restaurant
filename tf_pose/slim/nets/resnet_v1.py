@@ -57,9 +57,7 @@ from __future__ import division
 from __future__ import print_function
 
 import tensorflow as tf
-
 from nets import resnet_utils
-
 
 resnet_arg_scope = resnet_utils.resnet_arg_scope
 slim = tf.contrib.slim
@@ -153,7 +151,7 @@ def resnet_v1(inputs,
   """Generator for v1 ResNet models.
 
   This function generates a family of ResNet v1 models. See the resnet_v1_*()
-  methods for specific model instantiations, obtained by selecting different
+  methods for specific models instantiations, obtained by selecting different
   block instantiations that produce ResNets of various depths.
 
   Training for image classification on Imagenet is usually done with [224, 224]
@@ -288,7 +286,7 @@ def resnet_v1_50(inputs,
                  store_non_strided_activations=False,
                  reuse=None,
                  scope='resnet_v1_50'):
-  """ResNet-50 model of [1]. See resnet_v1() for arg and return description."""
+  """ResNet-50 models of [1]. See resnet_v1() for arg and return description."""
   blocks = [
       resnet_v1_block('block1', base_depth=64, num_units=3, stride=2),
       resnet_v1_block('block2', base_depth=128, num_units=4, stride=2),
@@ -312,7 +310,7 @@ def resnet_v1_101(inputs,
                   store_non_strided_activations=False,
                   reuse=None,
                   scope='resnet_v1_101'):
-  """ResNet-101 model of [1]. See resnet_v1() for arg and return description."""
+  """ResNet-101 models of [1]. See resnet_v1() for arg and return description."""
   blocks = [
       resnet_v1_block('block1', base_depth=64, num_units=3, stride=2),
       resnet_v1_block('block2', base_depth=128, num_units=4, stride=2),
@@ -336,7 +334,7 @@ def resnet_v1_152(inputs,
                   spatial_squeeze=True,
                   reuse=None,
                   scope='resnet_v1_152'):
-  """ResNet-152 model of [1]. See resnet_v1() for arg and return description."""
+  """ResNet-152 models of [1]. See resnet_v1() for arg and return description."""
   blocks = [
       resnet_v1_block('block1', base_depth=64, num_units=3, stride=2),
       resnet_v1_block('block2', base_depth=128, num_units=8, stride=2),
@@ -360,7 +358,7 @@ def resnet_v1_200(inputs,
                   spatial_squeeze=True,
                   reuse=None,
                   scope='resnet_v1_200'):
-  """ResNet-200 model of [2]. See resnet_v1() for arg and return description."""
+  """ResNet-200 models of [2]. See resnet_v1() for arg and return description."""
   blocks = [
       resnet_v1_block('block1', base_depth=64, num_units=3, stride=2),
       resnet_v1_block('block2', base_depth=128, num_units=24, stride=2),

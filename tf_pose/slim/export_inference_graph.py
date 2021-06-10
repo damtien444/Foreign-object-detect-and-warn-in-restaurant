@@ -12,16 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ==============================================================================
-r"""Saves out a GraphDef containing the architecture of the model.
+r"""Saves out a GraphDef containing the architecture of the models.
 
-To use it, run something like this, with a model name defined by slim:
+To use it, run something like this, with a models name defined by slim:
 
 bazel build tensorflow_models/research/slim:export_inference_graph
 bazel-bin/tensorflow_models/research/slim/export_inference_graph \
 --model_name=inception_v3 --output_file=/tmp/inception_v3_inf_graph.pb
 
-If you then want to use the resulting model with your own or pretrained
-checkpoints as part of a mobile model, you can run freeze_graph to get a graph
+If you then want to use the resulting models with your own or pretrained
+checkpoints as part of a mobile models, you can run freeze_graph to get a graph
 def with the variables inlined as constants using:
 
 bazel build tensorflow/python/tools:freeze_graph
@@ -31,7 +31,7 @@ bazel-bin/tensorflow/python/tools/freeze_graph \
 --input_binary=true --output_graph=/tmp/frozen_inception_v3.pb \
 --output_node_names=InceptionV3/Predictions/Reshape_1
 
-The output node names will vary depending on the model, but you can inspect and
+The output node names will vary depending on the models, but you can inspect and
 estimate them using the summarize_graph tool:
 
 bazel build tensorflow/tools/graph_transforms:summarize_graph
@@ -57,11 +57,10 @@ from __future__ import division
 from __future__ import print_function
 
 import tensorflow as tf
-
 from tensorflow.python.platform import gfile
+
 from datasets import dataset_factory
 from nets import nets_factory
-
 
 slim = tf.contrib.slim
 
@@ -70,19 +69,19 @@ tf.app.flags.DEFINE_string(
 
 tf.app.flags.DEFINE_boolean(
     'is_training', False,
-    'Whether to save out a training-focused version of the model.')
+    'Whether to save out a training-focused version of the models.')
 
 tf.app.flags.DEFINE_integer(
     'image_size', None,
-    'The image size to use, otherwise use the model default_image_size.')
+    'The image size to use, otherwise use the models default_image_size.')
 
 tf.app.flags.DEFINE_integer(
     'batch_size', None,
-    'Batch size for the exported model. Defaulted to "None" so batch size can '
-    'be specified at model runtime.')
+    'Batch size for the exported models. Defaulted to "None" so batch size can '
+    'be specified at models runtime.')
 
 tf.app.flags.DEFINE_string('dataset_name', 'imagenet',
-                           'The name of the dataset to use with the model.')
+                           'The name of the dataset to use with the models.')
 
 tf.app.flags.DEFINE_integer(
     'labels_offset', 0,

@@ -24,7 +24,6 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
-
 import tensorflow as tf
 
 slim = tf.contrib.slim
@@ -114,7 +113,7 @@ def inception_resnet_v2_base(inputs,
                              align_feature_maps=False,
                              scope=None,
                              activation_fn=tf.nn.relu):
-  """Inception model from  http://arxiv.org/abs/1602.07261.
+  """Inception models from  http://arxiv.org/abs/1602.07261.
 
   Constructs an Inception Resnet v2 network from inputs to the given final
   endpoint. This method can construct the network up to the final inception
@@ -294,7 +293,7 @@ def inception_resnet_v2(inputs, num_classes=1001, is_training=True,
                         scope='InceptionResnetV2',
                         create_aux_logits=True,
                         activation_fn=tf.nn.relu):
-  """Creates the Inception Resnet V2 model.
+  """Creates the Inception Resnet V2 models.
 
   Args:
     inputs: a 4-D tensor of size [batch_size, height, width, 3].
@@ -315,7 +314,7 @@ def inception_resnet_v2(inputs, num_classes=1001, is_training=True,
     net: the output of the logits layer (if num_classes is a non-zero integer),
       or the non-dropped-out input to the logits layer (if num_classes is 0 or
       None).
-    end_points: the set of end_points from the inception model.
+    end_points: the set of end_points from the inception models.
   """
   end_points = {}
 

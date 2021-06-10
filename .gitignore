@@ -7,7 +7,9 @@
 *.iml
 out
 gen
-
+models/*
 yolo_tiny/path/*
-
 data/*
+models/weights/*
+MyYolov4/models/*
+MyYolov4/models/weights/*

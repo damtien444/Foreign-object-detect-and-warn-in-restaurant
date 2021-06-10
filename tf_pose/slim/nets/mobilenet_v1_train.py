@@ -19,7 +19,6 @@ from __future__ import division
 from __future__ import print_function
 
 import tensorflow as tf
-
 from datasets import dataset_factory
 from nets import mobilenet_v1
 from preprocessing import preprocessing_factory
@@ -68,7 +67,7 @@ def get_quant_delay():
     # We can start quantizing immediately if we are finetuning.
     return 0
   else:
-    # We need to wait for the model to train a bit before we quantize if we are
+    # We need to wait for the models to train a bit before we quantize if we are
     # training from scratch.
     return 250000
 
@@ -112,7 +111,7 @@ def imagenet_input(is_training):
 
 
 def build_model():
-  """Builds graph for model to train with rewrites for quantization.
+  """Builds graph for models to train with rewrites for quantization.
 
   Returns:
     g: Graph with fake quantization ops and batch norm folding suitable for
@@ -134,7 +133,7 @@ def build_model():
 
     # Call rewriter to produce graph with fake quant ops and folded batch norms
     # quant_delay delays start of quantization till quant_delay steps, allowing
-    # for better model accuracy.
+    # for better models accuracy.
     if FLAGS.quantize:
       tf.contrib.quantize.create_training_graph(quant_delay=get_quant_delay())
 
@@ -166,7 +165,7 @@ def get_checkpoint_init_fn():
   if FLAGS.fine_tune_checkpoint:
     variables_to_restore = slim.get_variables_to_restore()
     global_step_reset = tf.assign(tf.train.get_or_create_global_step(), 0)
-    # When restoring from a floating point model, the min/max values for
+    # When restoring from a floating point models, the min/max values for
     # quantized weights and activations are not present.
     # We instruct slim to ignore variables that are missing during restoration
     # by setting ignore_missing_vars=True
@@ -177,7 +176,7 @@ def get_checkpoint_init_fn():
 
     def init_fn(sess):
       slim_init_fn(sess)
-      # If we are restoring from a floating point model, we need to initialize
+      # If we are restoring from a floating point models, we need to initialize
       # the global step to zero for the exponential decay to result in
       # reasonable learning rates.
       sess.run(global_step_reset)

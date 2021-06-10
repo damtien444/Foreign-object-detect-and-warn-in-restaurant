@@ -18,7 +18,6 @@ from __future__ import division
 from __future__ import print_function
 
 import os
-import time
 
 import numpy as np
 import tensorflow as tf
@@ -59,19 +58,26 @@ def load_labels(label_file):
 class SessionRun:
     def __init__(self):
         file_path = os.path.abspath(os.path.dirname(__file__))
-        path = os.path.join(file_path, '../models/graph/retrained/retrained_v2.0/')
-        model_file = path + 'retrained_graph.pb'
-        self.label_file = path + 'retrained_labels.txt'
+        # path = os.path.join(file_path, '../models/graph/retrained/retrained_v2.0/')
+        path = os.path.join(file_path, '../models/graph/self_trained/trained_1/')
+        # model_file = path + 'retrained_graph.pb'
+        # self.label_file = path + 'retrained_labels.txt'
+        model_file = path + 'saved_model.pb'
+        self.label_file = path + 'saved_model.txt'
         self.input_height = 224
         self.input_width = 224
         self.input_mean = 128
         self.input_std = 128
-        input_layer = "input"
-        output_layer = "final_result"
+        # input_layer = "input"
+        input_layer = "mobilenetv2_1.00_224_input"
+        # output_layer = "final_result"
+        output_layer = "dense/Sigmoid"
 
         self.graph = load_graph(model_file)
 
+        # input_name = "import/" + input_layer
         input_name = "import/" + input_layer
+        # output_name = "import/" + output_layer
         output_name = "import/" + output_layer
         self.input_operation = self.graph.get_operation_by_name(input_name)
         self.output_operation = self.graph.get_operation_by_name(output_name)

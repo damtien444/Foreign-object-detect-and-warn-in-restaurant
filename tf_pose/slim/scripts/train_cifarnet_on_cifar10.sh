@@ -16,8 +16,8 @@
 #
 # This script performs the following operations:
 # 1. Downloads the Cifar10 dataset
-# 2. Trains a CifarNet model on the Cifar10 training set.
-# 3. Evaluates the model on the Cifar10 testing set.
+# 2. Trains a CifarNet models on the Cifar10 training set.
+# 3. Evaluates the models on the Cifar10 testing set.
 #
 # Usage:
 # cd slim

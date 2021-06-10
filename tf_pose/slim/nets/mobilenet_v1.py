@@ -105,8 +105,8 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
-from collections import namedtuple
 import functools
+from collections import namedtuple
 
 import tensorflow as tf
 
@@ -191,7 +191,7 @@ def mobilenet_v1_base(inputs,
     depth_multiplier: Float multiplier for the depth (number of channels)
       for all convolution ops. The value must be greater than zero. Typical
       usage will be to set this value in (0, 1) to reduce the number of
-      parameters or computation cost of the model.
+      parameters or computation cost of the models.
     conv_defs: A list of ConvDef namedtuples specifying the net architecture.
     output_stride: An integer that specifies the requested ratio of input to
       output spatial resolution. If not None, then we invoke atrous convolution
@@ -315,7 +315,7 @@ def mobilenet_v1(inputs,
                  reuse=None,
                  scope='MobilenetV1',
                  global_pool=False):
-  """Mobilenet v1 model for classification.
+  """Mobilenet v1 models for classification.
 
   Args:
     inputs: a tensor of shape [batch_size, height, width, channels].
@@ -330,7 +330,7 @@ def mobilenet_v1(inputs,
     depth_multiplier: Float multiplier for the depth (number of channels)
       for all convolution ops. The value must be greater than zero. Typical
       usage will be to set this value in (0, 1) to reduce the number of
-      parameters or computation cost of the model.
+      parameters or computation cost of the models.
     conv_defs: A list of ConvDef namedtuples specifying the net architecture.
     prediction_fn: a function to get predictions out of logits.
     spatial_squeeze: if True, logits is of shape is [B, C], if false logits is
@@ -434,9 +434,9 @@ def mobilenet_v1_arg_scope(is_training=True,
   """Defines the default MobilenetV1 arg scope.
 
   Args:
-    is_training: Whether or not we're training the model. If this is set to
+    is_training: Whether or not we're training the models. If this is set to
       None, the parameter is not added to the batch_norm arg_scope.
-    weight_decay: The weight decay to use for regularizing the model.
+    weight_decay: The weight decay to use for regularizing the models.
     stddev: The standard deviation of the trunctated normal weight initializer.
     regularize_depthwise: Whether or not apply regularization on depthwise.
     batch_norm_decay: Decay for batch norm moving average.
@@ -444,7 +444,7 @@ def mobilenet_v1_arg_scope(is_training=True,
       in batch norm.
 
   Returns:
-    An `arg_scope` to use for the mobilenet v1 model.
+    An `arg_scope` to use for the mobilenet v1 models.
   """
   batch_norm_params = {
       'center': True,

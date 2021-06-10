@@ -2,10 +2,10 @@ import os
 from os.path import dirname, abspath
 
 import tensorflow as tf
-from tf_pose.network_mobilenet import MobilenetNetwork
-from tf_pose.network_mobilenet_thin import MobilenetNetworkThin
 
 from tf_pose.network_cmu import CmuNetwork
+from tf_pose.network_mobilenet import MobilenetNetwork
+from tf_pose.network_mobilenet_thin import MobilenetNetworkThin
 from tf_pose.network_personlab import PersonLabNetwork
 
 
@@ -59,17 +59,17 @@ def get_network(type, placeholder_input, sess_for_load=None, trainable=True):
         else:
             s = '%dx%d' % (placeholder_input.shape[2], placeholder_input.shape[1])
             ckpts = {
-                'mobilenet': 'trained/mobilenet_%s/model-246038' % s,
-                'mobilenet_thin': 'trained/mobilenet_thin_%s/model-449003' % s,
-                'mobilenet_fast': 'trained/mobilenet_fast_%s/model-189000' % s,
-                'mobilenet_accurate': 'trained/mobilenet_accurate/model-170000'
+                'mobilenet': 'trained/mobilenet_%s/models-246038' % s,
+                'mobilenet_thin': 'trained/mobilenet_thin_%s/models-449003' % s,
+                'mobilenet_fast': 'trained/mobilenet_fast_%s/models-189000' % s,
+                'mobilenet_accurate': 'trained/mobilenet_accurate/models-170000'
             }
             ckpt_path = os.path.join(_get_base_path(), ckpts[type])
             loader = tf.train.Saver()
             try:
                 loader.restore(sess_for_load, ckpt_path)
             except Exception as e:
-                raise Exception('Fail to load model files. \npath=%s\nerr=%s' % (ckpt_path, str(e)))
+                raise Exception('Fail to load models files. \npath=%s\nerr=%s' % (ckpt_path, str(e)))
 
     return net, pretrain_path_full, last_layer
 

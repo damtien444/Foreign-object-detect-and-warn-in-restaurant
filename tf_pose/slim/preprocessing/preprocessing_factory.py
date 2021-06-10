@@ -19,7 +19,6 @@ from __future__ import division
 from __future__ import print_function
 
 import tensorflow as tf
-
 from preprocessing import cifarnet_preprocessing
 from preprocessing import inception_preprocessing
 from preprocessing import lenet_preprocessing
@@ -33,7 +32,7 @@ def get_preprocessing(name, is_training=False):
 
   Args:
     name: The name of the preprocessing function.
-    is_training: `True` if the model is being used for training and `False`
+    is_training: `True` if the models is being used for training and `False`
       otherwise.
 
   Returns:

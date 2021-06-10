@@ -22,11 +22,11 @@
 # TENSORFLOW_PATH environment variable before calling the script if your source
 # is in a different location.
 # The main slim/nets/mobilenet_v1.md description has more details about the
-# model, but the main points are that it comes in four size versions, 1.0, 0.75,
+# models, but the main points are that it comes in four size versions, 1.0, 0.75,
 # 0.50, and 0.25, which controls the number of parameters and so the file size
-# of the model, and the input image size, which can be 224, 192, 160, or 128
+# of the models, and the input image size, which can be 224, 192, 160, or 128
 # pixels, and affects the amount of computation needed, and the latency.
-# Here's an example generating a frozen model from pretrained weights:
+# Here's an example generating a frozen models from pretrained weights:
 #
 
 set -e
